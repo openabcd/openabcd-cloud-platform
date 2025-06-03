@@ -1,0 +1,76 @@
+server:
+  port: 8080
+#  `forward-headers-strategy: native` 설정이 실제로 어떻게 작동하는지 예시로 설명해 드리겠습니다.
+#
+#  예를 들어, 다음과 같은 요청 흐름이 있다고 가정해 보겠습니다:
+#
+#  ```
+#  클라이언트(IP:
+#    203.0.113.1) -> API Gateway(IP:
+#      10.0.0.1) -> server-service(IP: 10.0.0.2)
+#  ```
+#
+#  1. 클라이언트(IP:
+#    203.0.113.1)가 API Gateway로 요청을 보냅니다:
+#      ```
+#      GET /servers/instances HTTP/1.1
+#      Host: example.com
+#      ```
+#
+#  2. API Gateway는 이 요청을 받아 server-service로 전달할 때 다음과 같은 헤더를 추가합니다:
+#    ```
+#    X-Forwarded-For: 203.0.113.1
+#    X-Forwarded-Proto: https
+#    X-Forwarded-Host: example.com
+#    ```
+#
+#  3. `forward-headers-strategy:
+#    native` 설정이 있으면:
+#      - server-service에서 `request.getRemoteAddr()`를 호출하면 실제 클라이언트 IP인 "203.0.113.1"을 반환합니다.
+#      - `request.getScheme()`은 "https"를 반환합니다.
+#      - `request.getServerName()`은 "example.com"을 반환합니다.
+#
+#  4. 이 설정이 없다면:
+#    - server-service에서 `request.getRemoteAddr()`는 API Gateway의 IP인 "10.0.0.1"을 반환합니다.
+#    - 원래 클라이언트 정보가 손실됩니다.
+#
+#  이 설정은 특히 로깅, IP 기반 접근 제어, 클라이언트 정보 분석 등에서 중요합니다. 예를 들어, server-service에서 요청을 로깅할 때 실제 사용자 IP를 기록할 수 있게 됩니다.
+  forward-headers-strategy: native
+
+spring:
+  application:
+    name: api-gateway
+  # https://docs.spring.io/spring-cloud-commons/reference/spring-cloud-commons/common-abstractions.html#simplediscoveryclient
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            server-service:
+              - uri: http://localhost:8081
+            floating-ip-service:
+              - uri: http://localhost:8082
+            storage-service:
+              - uri: http://localhost:8083
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: server-service
+              uri: lb://server-service
+              predicates:
+                - Path=/servers/**
+            - id: floating-ip-service
+              uri: lb://floating-ip-service
+              predicates:
+                - Path=/floating-ips/**
+            - id: storage-service
+              uri: lb://storage-service
+              predicates:
+                - Path=/storages/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, refresh, beans, httpexchanges, busrefresh, info, metrics, prometheus
