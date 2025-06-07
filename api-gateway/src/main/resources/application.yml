@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 #  `forward-headers-strategy: native` 설정이 실제로 어떻게 작동하는지 예시로 설명해 드리겠습니다.
 #
 #  예를 들어, 다음과 같은 요청 흐름이 있다고 가정해 보겠습니다:
@@ -38,39 +38,51 @@ server:
   forward-headers-strategy: native
 
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: api-gateway
   # https://docs.spring.io/spring-cloud-commons/reference/spring-cloud-commons/common-abstractions.html#simplediscoveryclient
-  cloud:
-    discovery:
-      client:
-        simple:
-          instances:
-            server-service:
-              - uri: http://localhost:8081
-            floating-ip-service:
-              - uri: http://localhost:8082
-            storage-service:
-              - uri: http://localhost:8083
-    gateway:
-      server:
-        webflux:
-          routes:
-            - id: server-service
-              uri: lb://server-service
-              predicates:
-                - Path=/servers/**
-            - id: floating-ip-service
-              uri: lb://floating-ip-service
-              predicates:
-                - Path=/floating-ips/**
-            - id: storage-service
-              uri: lb://storage-service
-              predicates:
-                - Path=/storages/**
+#  cloud:
+#    discovery:
+#      client:
+#        simple:
+#          instances:
+#            server-service:
+#              - uri: http://localhost:9092
+#            floating-ip-service:
+#              - uri: http://localhost:8083
+#            storage-service:
+#              - uri: http://localhost:8084
+#    gateway:
+#      server:
+#        webflux:
+#          routes:
+#            - id: server-service
+#              uri: lb://server-service
+#              predicates:
+#                - Path=/servers/**
+#            - id: floating-ip-service
+#              uri: lb://floating-ip-service
+#              predicates:
+#                - Path=/floating-ips/**
+#            - id: storage-service
+#              uri: lb://storage-service
+#              predicates:
+#                - Path=/storages/**
 
 management:
   endpoints:
     web:
       exposure:
         include: health, refresh, beans, httpexchanges, busrefresh, info, metrics, prometheus
+
+spring.grpc:
+  client:
+    channels:
+      server-service:
+        address: localhost:50082
+        negotiation-type: plaintext
+  server:
+    enabled: false
+

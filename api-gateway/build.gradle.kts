@@ -5,13 +5,23 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common"))
+    implementation(platform(project(":platform-bom")))
+
     implementation("org.springframework.cloud:spring-cloud-starter-gateway-server-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation(project(":common"))
+
+    // grpc
+    implementation("io.grpc:grpc-services")
+    implementation("org.springframework.grpc:spring-grpc-spring-boot-starter")
+
+    // Lombok
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
 }
 
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${rootProject.extra["springCloudVersion"]}")
+configurations {
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
     }
 }
