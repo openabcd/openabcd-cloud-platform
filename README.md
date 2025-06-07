@@ -92,3 +92,17 @@ GET /products?
     include=manufacturer&
     meta=true
 ```
+
+
+## signoz 설치 및 실행
+
+### 설치
+```bash
+git clone -b main https://github.com/SigNoz/signoz.git
+```
+
+### 실행 
+```bash
+cd signoz/deploy/docker && \
+docker compose up -d --remove-orphans
+```

@@ -12,4 +12,7 @@ include(
     // Libraries
     "common",
     "infra",
+
+    // Platform BOM
+    "platform-bom",
 )
