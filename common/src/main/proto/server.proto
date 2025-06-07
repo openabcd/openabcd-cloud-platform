@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package io.github.openabcd.cloud.grpc;
+
+option java_outer_classname = "ServerProto";
+
+service ServerService {
+  rpc GetServer (GetServerDocument) returns (ServerDocument);
+  rpc GetServers (GetServersRequest) returns (ServerCollection);
+}
+
+message GetServerDocument {
+  string id = 1;
+  string user_id = 2;
+}
+
+message GetServersRequest {
+  string user_id = 1;
+}
+
+message ServerDocument {
+  string id = 1;
+  string name = 2;
+  string status = 3;
+}
+
+message ServerCollection {
+  repeated ServerDocument servers = 1;
+}
