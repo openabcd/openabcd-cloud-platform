@@ -1,0 +1,10 @@
+# TODO: server port는 안띄우고 grpc port만 띄우기
+
+server:
+  port: 8082
+spring:
+  grpc:
+    server:
+      port: 50082
+      servlet:
+        enabled: false
