@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.5.0" apply false
     id("io.spring.dependency-management") version "1.1.7" apply false
     id("com.google.protobuf") version "0.9.4" apply false
+    id("net.ltgt.errorprone") version "4.1.0" apply false
 }
 
 allprojects {
@@ -22,13 +23,6 @@ subprojects {
     plugins.withType<JavaPlugin> {
         the<JavaPluginExtension>().toolchain {
             languageVersion.set(JavaLanguageVersion.of(21))
-        }
-        
-        // lombok 사용하는 프로젝트에 compileOnly와 annotationProcessor 설정 연결
-        configurations {
-            compileOnly.configure {
-                extendsFrom(configurations.findByName("annotationProcessor") ?: configurations.create("annotationProcessor"))
-            }
         }
     }
 }

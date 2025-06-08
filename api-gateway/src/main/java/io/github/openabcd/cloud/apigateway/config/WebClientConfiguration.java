@@ -13,4 +13,9 @@ public class WebClientConfiguration {
     public WebClient.Builder loadBalancedWebClientBuilder() {
         return WebClient.builder();
     }
+
+    @Bean
+    public WebClient identityService(@LoadBalanced WebClient.Builder builder) {
+        return builder.baseUrl("http://identity-service").build();
+    }
 }

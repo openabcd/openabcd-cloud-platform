@@ -5,14 +5,9 @@ import lombok.Getter;
 
 import java.util.UUID;
 
-
 @Getter
 @Builder
-public class Server {
+public class MainAccount {
     private UUID id;
-    private final String name;
-    private final ServerStatus status;
-
-    /// 연관 자원
-    private final MainAccount mainAccount;
+    private String name;
 }

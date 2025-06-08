@@ -1,7 +1,7 @@
 package io.github.openabcd.cloud.serverservice.usecase;
 
 import io.github.openabcd.cloud.common.domain.Server;
-import io.github.openabcd.cloud.common.mapper.ServerMapper;
+import io.github.openabcd.cloud.common.component.mapper.ServerMapper;
 import io.github.openabcd.cloud.grpc.ServerProto;
 import io.github.openabcd.cloud.grpc.ServerServiceGrpc;
 import io.github.openabcd.cloud.common.domain.ServerStatus;

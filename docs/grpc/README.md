@@ -1,3 +1,4 @@
+```java
 package io.github.openabcd.cloud.apigateway.config;
 
 import io.github.openabcd.cloud.grpc.ServerServiceGrpc;
@@ -13,3 +14,16 @@ public class GrpcClientConfiguration {
         return ServerServiceGrpc.newFutureStub(channels.createChannel("server-service"));
     }
 }
+
+```
+
+```yaml
+spring.grpc:
+  client:
+    channels:
+      server-service:
+        address: localhost:50082
+        negotiation-type: plaintext
+  server:
+    enabled: false
+```

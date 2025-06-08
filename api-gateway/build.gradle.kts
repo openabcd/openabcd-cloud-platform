@@ -10,10 +10,7 @@ dependencies {
 
     implementation("org.springframework.cloud:spring-cloud-starter-gateway-server-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-
-    // grpc
-    implementation("io.grpc:grpc-services")
-    implementation("org.springframework.grpc:spring-grpc-spring-boot-starter")
+    implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer")
 
     // Lombok
     compileOnly("org.projectlombok:lombok")
