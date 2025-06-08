@@ -6,6 +6,7 @@ include(
 
     // MS
     "floating-ip-service",
+    "identity-service",
     "server-service",
     "storage-service",
 

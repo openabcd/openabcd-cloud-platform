@@ -1,0 +1,15 @@
+server:
+  port: 8085
+
+spring.grpc:
+  server:
+    port: 50085
+
+#spring.grpc:
+#  client:
+#    channels:
+#      server-service:
+#        address: localhost:50082
+#        negotiation-type: plaintext
+#  server:
+#    enabled: false
