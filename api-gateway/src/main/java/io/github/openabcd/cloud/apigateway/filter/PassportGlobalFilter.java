@@ -48,10 +48,9 @@ public class PassportGlobalFilter implements GlobalFilter, Ordered {
         val authorization = exchange.getRequest().getHeaders().getFirst(AUTHORIZATION_HEADER);
 
         if (authorization == null) {
-            return exchange.getResponse().setComplete().then(Mono.fromRunnable(() -> {
-                exchange.getResponse().setStatusCode(org.springframework.http.HttpStatus.FOUND);
-                exchange.getResponse().getHeaders().set("Location", "/signin");
-            }));
+            exchange.getResponse().setStatusCode(org.springframework.http.HttpStatus.FOUND);
+            exchange.getResponse().getHeaders().set("Location", "/signin");
+            return exchange.getResponse().setComplete();
         }
 
         return identityService.post().uri("/passports")
