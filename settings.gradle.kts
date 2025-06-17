@@ -1,4 +1,4 @@
-rootProject.name = "openabcd-cloud-platform"
+rootProject.name = "openabcd-cloud"
 
 include(
     // API Gateway
