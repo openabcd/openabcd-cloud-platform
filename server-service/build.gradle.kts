@@ -24,6 +24,16 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("com.mysql:mysql-connector-j")
+    implementation("com.github.f4b6a3:uuid-creator")
+
+    // docker-compose
+    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+
+    implementation("io.opentelemetry:opentelemetry-api")
+    implementation("io.opentelemetry:opentelemetry-context")
+
     // JSpecify
     implementation("org.jspecify:jspecify:1.0.0")
     errorprone("com.uber.nullaway:nullaway:0.12.6")

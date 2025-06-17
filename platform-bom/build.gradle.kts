@@ -19,6 +19,7 @@ dependencies {
         api("com.uber.nullaway:nullaway:0.12.6")
         api("com.google.errorprone:error_prone_core:2.37.0")
         api("org.projectlombok:lombok:1.18.38")
+        api("com.github.f4b6a3:uuid-creator:6.1.1")
     }
 }
 

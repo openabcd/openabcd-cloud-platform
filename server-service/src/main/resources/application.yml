@@ -1,5 +1,3 @@
-# TODO: server port는 안띄우고 grpc port만 띄우기
-
 server:
   port: 8082
 spring:
@@ -8,3 +6,13 @@ spring:
       port: 50082
       servlet:
         enabled: false
+  docker:
+    compose:
+      lifecycle-management: start_only
+      start:
+        skip: if_running
+      file: compose.yaml
+
+  jpa:
+    database: mysql
+    generate-ddl: true
